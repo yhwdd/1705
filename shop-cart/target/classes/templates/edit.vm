@@ -1,0 +1,135 @@
+<html>
+<head>
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script>
+        function doEdit(id) {
+            $('#itemId').val(id)
+            $.ajax({
+                url: "/get", data: {
+                    "id": id
+                }, success: function (item) {
+                    $('#titleEdit').val(item.title)
+                    $('#priceEdit').val(item.price)
+                }
+            });
+        }
+
+        function subEdit() {
+            var item =
+            {
+                "id": $('#itemId').val(),
+                "title": $('#titleEdit').val(),
+                "price": $('#priceEdit').val(),
+                "image": $('#edit_itemImage').val()
+            }
+
+            $.ajax({
+                //提交数据的类型 POST GET
+                type: "POST",
+                //提交的网址
+                url: "/item/edit",
+                //提交的数据
+                data: JSON.stringify(item),
+                contentType: "application/json",
+                //返回数据的格式
+                datatype: "json",//"xml", "html", "script", "json", "jsonp", "text".
+                //在请求之前调用的函数
+                beforeSend: function () {
+
+                },
+                //成功返回之后调用的函数
+                success: function (data) {
+                    alert("保存成功!!!")
+                    window.location.reload()
+                },
+                //调用执行后调用的函数
+                complete: function (XMLHttpRequest, textStatus) {
+                    //HideLoading();
+                },
+                //调用出错执行的函数
+                error: function () {
+                    //请求出错处理
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            //图片上传
+            $('#edit_itemImage_input').on('change', function (event) {
+                var formData = new FormData();
+                formData.enctype = "multipart/form-data";
+                if (this.files.length > 0) {
+                    var image = event.target.files[0];
+                    var imageSize = image.size / (1024 * 1024);
+                    if (imageSize > 2) {
+                        alert('暂不支持大于2M的图片上传，请裁剪后继续');
+                        return;
+                    }
+                    var fileName = image.name;
+                    //check图片格式
+                    if (!(/\.(jpg|png|jpeg)$/i).test(fileName)) {
+                        alert('图片的格式不对，请选择 jpg, png, gif 格式的文件');
+                        return;
+                    }
+                    formData.append('image', image);
+                    $.ajax({
+                        url: '/image/upload',
+                        method: 'POST',
+                        data: formData,
+                        processData: false,
+                        dataType: 'json',
+                        contentType: false
+                    }).done(function (data) {
+                        console.log(data);
+                        $('#imageEdit').html('<img src="image/' + data.url + '">')
+                        $('#edit_itemImage').val(data.url)
+                    });
+                }
+            });
+
+        });
+    </script>
+</head>
+<body>
+    #foreach($item in $list)
+    <div><img src="image/$item.image"></div>
+    <div style="font-family: Arial"><font color="#7fffd4"> $item.title</font>:$item.price </div>
+    <a onclick="doEdit($item.id)" href="#">编辑</a>
+    <br>
+    #end
+<div>一共有数据:$!{total}条</div>
+<div>当前是第$!{page}页,每页大小:$!{pageSize}条数据</div>
+
+    #set($all = ($total + $pageSize + (-1)) / $pageSize)
+    #foreach($i in [1..$all])
+    <a href="edit?page=${i}&pageSize=${pageSize}">$i</a> &nbsp;&nbsp;&nbsp;
+    #end
+
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<div id="edit_panel">
+    id:<input type="text" id="itemId" disabled>
+
+    <p></p>
+    标题:<input type="text" id="titleEdit">
+
+    <p></p>
+    价格:<input type="text" id="priceEdit">
+
+    <p></p>
+    image:
+    <div id="imageEdit"></div>
+    <input type="file" id="edit_itemImage_input">
+    <input type="text" id="edit_itemImage" hidden> ##隐藏的图片路径
+    <button value="更新" onclick="subEdit()" title="更新" id="btn">更新</button>
+</div>
+
+</body>
+
+</html>
+

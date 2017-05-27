@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>电信商城</title>
+
+##    <link href='css/fnt.css' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/reset.css" type="text/css"/>
+    <link rel="stylesheet" href="css/style.css" type="text/css"/>
+
+    <script src="js/modernizr.js"></script>
+
+    <script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+    <script src="js/jquery.fly.min.js"></script>
+
+</head>
+<body>
+<header>
+    <h1>电信商城——我行，神舟行！</h1>
+</header>
+
+<a href="/cart?cartId=1" class="cd-cart">
+    <span>0</span>
+</a>
+
+<ul class="cd-gallery">
+    #foreach($item in $list)
+        <li>
+            <div class="cd-single-item">
+                <a href="#0">
+                    <ul class="cd-slider-wrapper">
+                        <li class="selected"><img src="image/$item.image" alt="Preview image"></li>
+                    </ul>
+                </a>
+
+                <div class="cd-customization" >
+                    <input type="text" id="$item.id" name="image/$item.image" hidden > ##隐藏的图片路径
+                    <button class="add-to-cart" data-bind=$item.id>
+                        <em>Add to Cart</em>
+                        <svg x="0px" y="0px" width="32px" height="32px" viewBox="0 0 32 32">
+                            <path stroke-dasharray="19.79 19.79" stroke-dashoffset="19.79" fill="none" stroke="#FFFFFF"
+                                  stroke-width="2" stroke-linecap="square" stroke-miterlimit="10"
+                                  d="M9,17l3.9,3.9c0.1,0.1,0.2,0.1,0.3,0L23,11"/>
+                        </svg>
+                    </button>
+                </div> <!-- .cd-customization -->
+
+                <button class="cd-customization-trigger">Customize</button>
+            </div> <!-- .cd-single-item -->
+
+            <div class="cd-item-info">
+                <b><a href="#0">$item.title</a></b>
+                <em>￥$item.price</em>
+            </div> <!-- cd-item-info -->
+        </li>
+    #end
+</ul> <!-- cd-gallery -->
+
+
+</body>
+</html>

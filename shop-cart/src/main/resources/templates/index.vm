@@ -1,0 +1,40 @@
+<html>
+<head><title>sssss</title></head>
+<script src="js/jquery-3.2.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        console.log("aaaaaaaa")
+        $.ajax({
+            url: "/list", data: {
+                "page": 1,
+                "pageSize": 3
+            }, success: function (list) {
+                for (var i = 0; i < list.length; i++) {
+                    var item = list[i];
+                    //$('#content').html(item.title)
+                }
+            }
+        });
+    });
+</script>
+
+<body>
+    #foreach($item in $list)
+    <div style="font-family: Arial"><font color="#7fffd4"> $item.title</font> :  $item.price </div>
+    <div><img src="/image/$item.image"></div>
+    <br>
+    #end
+<div>一共有数据:$!{total}条</div>
+<div>当前是第$!{page}页,每页大小:$!{pageSize}条数据</div>
+
+    #set($all = ($total + $pageSize + (-1)) / $pageSize)
+    #foreach($i in [1..$all])
+    <a href="index?page=${i}&pageSize=${pageSize}">$i</ a> &nbsp;&nbsp;&nbsp;
+    #end
+##<div id="content"></div>
+
+</body>
+</html>
+
+
+

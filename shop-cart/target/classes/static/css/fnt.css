@@ -1,0 +1,23 @@
+﻿@font-face {
+  font-family: 'Work Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Work Sans'), local('WorkSans-Regular'), url(http://fontstatic.useso.com/s/worksans/v2/ElUAY9q6T0Ayx4zWzW63VKCWcynf_cDxXwCLxiixG1c.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Work Sans';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Work Sans SemiBold'), local('WorkSans-SemiBold'), url(http://fontstatic.useso.com/s/worksans/v2/z9rX03Xuz9ZNHTMg1_ghGYnF5uFdDttMLvmWuJdhhgs.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Work Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Work Sans Bold'), local('WorkSans-Bold'), url(http://fontstatic.useso.com/s/worksans/v2/4udXuXg54JlPEP5iKO5AmYnF5uFdDttMLvmWuJdhhgs.ttf) format('truetype');
+}
+h1{
+font-family: 'Work Sans';
+  font-style: normal;
+  font-weight: 600;
+}
